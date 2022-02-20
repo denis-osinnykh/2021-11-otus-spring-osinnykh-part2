@@ -14,10 +14,6 @@ public class Book {
     @Nullable
     private long genreId;
 
-    /*
-    Не понял как сделать конструктор с необязательными параметрами через аннотации.
-    Через @RequiredArgsConstructor не получилось. При вызове new Book() не получается передать необязательные nullable-параметры.
-    */
     public Book(long id, String name, @Nullable long authorId, @Nullable long genreId){
        this.id = id;
        this.name = name;

@@ -28,14 +28,13 @@ public class BookDaoJdbc implements BookDao {
     @Override
     public Book getById(long id) {
         Map<String, Long> params = Collections.singletonMap("id", id);
-        Book book = njdbc.queryForObject("select id, name from book where id = :id", params, new BookMapper());
+        Book book = njdbc.queryForObject("select id, name, author_id, genre_id from book where id = :id", params, new BookMapper());
         return book;
     }
 
     @Override
     public List<Book> getAll() {
-        Map<String, Long> params = Collections.singletonMap("id", null);
-        List<Book> list = njdbc.queryForList("select id, name from book", params, Book.class);
+        List<Book> list = njdbc.query("select id, name, author_id, genre_id from book", new BookMapper());
         return list;
     }
 
