@@ -1,6 +1,5 @@
 package my.spring.service;
 
-import lombok.RequiredArgsConstructor;
 import my.spring.dao.BookDao;
 import my.spring.domain.Book;
 import org.junit.jupiter.api.DisplayName;
@@ -8,17 +7,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
@@ -44,13 +39,9 @@ public class BookServiceImplTest {
     @Autowired
     private BookService bs;
 
-    /*@Autowired
-    BookServiceImplTest(BookServiceImpl bs) { this.bs = bs; }*/
-
     @Test
     @DisplayName("возвращать количество книг")
     void shouldGetBooksCount() {
-        //assertEquals(1, bs.getBooksCount());
         assertThat(bs.getBooksCount()).isNotNull();
     }
 

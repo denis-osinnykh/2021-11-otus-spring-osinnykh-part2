@@ -1,10 +1,8 @@
 package my.spring.domain;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
 
-//@RequiredArgsConstructor
 @Data
 public class Book {
     private final long id;
