@@ -36,8 +36,8 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    public boolean addBook(long id, String bookName, @Nullable int authorId, @Nullable int genreId) {
-        Book newBook =  new Book(id, bookName, authorId, genreId);
+    public boolean addBook(String bookName, @Nullable long authorId, @Nullable long genreId) {
+        Book newBook =  new Book(dao.getCount()+1, bookName, authorId, genreId);
         try {
             dao.insert(newBook);
             return true;

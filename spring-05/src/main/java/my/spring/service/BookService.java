@@ -14,7 +14,7 @@ public interface BookService {
 
     List<Book> getAllBooks();
 
-    boolean addBook(long id, String bookName, @Nullable int authorId, @Nullable int genreId);
+    boolean addBook(String bookName, @Nullable long authorId, @Nullable long genreId);
 
     boolean deleteBookById(long id);
 

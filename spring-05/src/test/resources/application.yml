@@ -1,13 +1,15 @@
-dao:
-  language: EN
-service:
-  required-answer-count: 3
-input-output:
-  locale: en_EN
-
 spring:
-  messages:
-    basename: messages
+  datasource:
+    url: jdbc:h2:mem:testdb
+  sql:
+    init:
+      mode: always
+      data-locations: data.sql
+  h2:
+    console:
+      path: /h2-console
+      settings:
+        web-allow-others: true
   main:
     allow-circular-references: true
   shell:

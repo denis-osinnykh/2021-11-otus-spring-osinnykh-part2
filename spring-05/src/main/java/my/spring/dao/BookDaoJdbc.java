@@ -21,8 +21,8 @@ public class BookDaoJdbc implements BookDao {
     @Override
     public int getCount() {
         Map<String, Object> params = Collections.singletonMap("id", 1);
-        int count = njdbc.queryForObject("select count(*) from book", params, Integer.class);
-        return count;
+        Integer count = njdbc.queryForObject("select count(*) from book", params, Integer.class);
+        return count == null? 0: count;
     }
 
     @Override

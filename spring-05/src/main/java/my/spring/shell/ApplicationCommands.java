@@ -42,8 +42,8 @@ public class ApplicationCommands {
     Хотелось сделать возможность добавлять книгу без автора и жанра.
     */
     @ShellMethod(value = "Add the book", key = {"ab", "add book"})
-    public void addBooks(@ShellOption String bookName, @ShellOption @Nullable int authorId, @ShellOption @Nullable int genreId) {
-        boolean result = bs.addBook(bs.getBooksCount()+1, bookName, authorId, genreId);
+    public void addBooks(@ShellOption String bookName, @ShellOption @Nullable Long authorId, @ShellOption @Nullable Long genreId) {
+        boolean result = bs.addBook(bookName, authorId, genreId);
         if (result)
             io.printString("Книга добавлена!", null);
     }
