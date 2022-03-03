@@ -1,7 +1,9 @@
 package my.spring.service;
 
 import my.spring.dao.BookDao;
+import my.spring.domain.Author;
 import my.spring.domain.Book;
+import my.spring.domain.Genre;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +26,19 @@ public class BookServiceImplTest {
     private static final long EXPECTED_BOOK_ID = 1;
     private static final String EXPECTED_BOOK_NAME = "Test book 1";
     private static final long EXPECTED_BOOK_AUTHOR_ID = 1;
+    private static final String EXPECTED_BOOK_AUTHOR_NAME = "Test author";
     private static final long EXPECTED_BOOK_GENRE_ID = 1;
+    private static final String EXPECTED_BOOK_GENRE_NAME = "Test genre";
 
     private static final long NOT_EXPECTED_BOOK_ID = -1;
     private static final long DELETED_BOOK_ID = 2;
 
     private static final long NEW_BOOK_ID = 10;
     private static final String NEW_BOOK_NAME = "Test book 10";
-    private static final long NEW_BOOK_AUTHOR_ID = 1;
-    private static final long NEW_BOOK_GENRE_ID = 1;
+    private static final long NEW_BOOK_AUTHOR_ID = 2;
+    private static final String NEW_BOOK_AUTHOR_NAME = "Test author 2";
+    private static final long NEW_BOOK_GENRE_ID = 2;
+    private static final String NEW_BOOK_GENRE_NAME = "Test genre 2";
 
     @MockBean
     private BookDao dao;
@@ -48,8 +54,10 @@ public class BookServiceImplTest {
     @Test
     @DisplayName("возвращать книгу по коду")
     void shouldGetBookById() {
+        Author expectedAuthor = new Author(EXPECTED_BOOK_AUTHOR_ID, EXPECTED_BOOK_AUTHOR_NAME);
+        Genre expectedGenre = new Genre(EXPECTED_BOOK_GENRE_ID, EXPECTED_BOOK_GENRE_NAME);
         given(this.dao.getById(EXPECTED_BOOK_ID))
-                .willReturn(new Book(EXPECTED_BOOK_ID, EXPECTED_BOOK_NAME, EXPECTED_BOOK_AUTHOR_ID, EXPECTED_BOOK_GENRE_ID));
+                .willReturn(new Book(EXPECTED_BOOK_ID, EXPECTED_BOOK_NAME, expectedAuthor, expectedGenre));
         assertThat(bs.getBookById(EXPECTED_BOOK_ID)).isNotNull();
     }
 
@@ -64,18 +72,22 @@ public class BookServiceImplTest {
     @Test
     @DisplayName("возвращать true при добавлении, если книга была добавлена")
     void shouldReturnTrueAfterAdding() {
-        Book newBook = new Book(NEW_BOOK_ID, NEW_BOOK_NAME, NEW_BOOK_AUTHOR_ID, NEW_BOOK_GENRE_ID);
+        Author newAuthor = new Author(EXPECTED_BOOK_AUTHOR_ID, EXPECTED_BOOK_AUTHOR_NAME);
+        Genre newGenre = new Genre(EXPECTED_BOOK_GENRE_ID, EXPECTED_BOOK_GENRE_NAME);
+        Book newBook = new Book(NEW_BOOK_ID, NEW_BOOK_NAME, newAuthor, newGenre);
         doNothing().when(this.dao).insert(newBook);
-        boolean result = bs.addBook(NEW_BOOK_NAME, NEW_BOOK_AUTHOR_ID, NEW_BOOK_GENRE_ID);
+        boolean result = bs.addBook(NEW_BOOK_NAME, EXPECTED_BOOK_AUTHOR_ID, EXPECTED_BOOK_GENRE_ID);
         assertEquals(true, result);
     }
 
     @Test
     @DisplayName("возвращать false при добавлении, если книга добавлена не была")
     void shouldReturnFalseAfterAdding() {
-        Book newBook = new Book(EXPECTED_BOOK_ID, EXPECTED_BOOK_NAME, EXPECTED_BOOK_AUTHOR_ID, EXPECTED_BOOK_GENRE_ID);
-        doThrow(new DuplicateKeyException("")).when(this.dao).insert(newBook);
-        boolean result = bs.addBook(EXPECTED_BOOK_NAME, EXPECTED_BOOK_AUTHOR_ID, EXPECTED_BOOK_GENRE_ID);
+        Author notExpectedAuthor = new Author(NEW_BOOK_AUTHOR_ID, NEW_BOOK_AUTHOR_NAME);
+        Genre notExpectedGenre = new Genre(NEW_BOOK_GENRE_ID, NEW_BOOK_GENRE_NAME);
+        Book newBook = new Book(EXPECTED_BOOK_ID, EXPECTED_BOOK_NAME, notExpectedAuthor, notExpectedGenre);
+        doThrow(new EmptyResultDataAccessException(1)).when(this.dao).insert(newBook);
+        boolean result = bs.addBook(EXPECTED_BOOK_NAME, NEW_BOOK_AUTHOR_ID, NEW_BOOK_GENRE_ID);
         assertEquals(false, result);
     }
 

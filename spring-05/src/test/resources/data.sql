@@ -1,5 +1,5 @@
-insert into author (id, name) values (1, 'Test author');
+insert into author (name) values ('Test author');
 
-insert into genre (id, name) values (1, 'Test genre');
+insert into genre (name) values ('Test genre');
 
-insert into book (id, name, author_id, genre_id) values (1, 'Test book', 1, 1);
+insert into book (name, author_id, genre_id) values ('Test book', 1, 1);

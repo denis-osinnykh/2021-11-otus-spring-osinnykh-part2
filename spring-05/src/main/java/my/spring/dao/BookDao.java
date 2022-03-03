@@ -13,5 +13,11 @@ public interface BookDao {
 
     void insert(Book book);
 
+    void updateNameById(String name, long id);
+
+    void updateAuthorById(long author_id, long id);
+
+    void updateGenreById(long genre_id, long id);
+
     void deleteById(long id);
 }
