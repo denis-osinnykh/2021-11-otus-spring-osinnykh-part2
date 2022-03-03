@@ -58,26 +58,20 @@ public class BookDaoJdbc implements BookDao {
     public void updateNameById(String name, long id) {
         njdbc.update("update book set name = :name where id = :id",
                 Map.of("name", name,
-                        //"author_id", book.getAuthor() != null ? book.getAuthor().getId() : null,
-                        //"genre_id", book.getGenre() != null ? book.getGenre().getId() : null,
                         "id", id));
     }
 
     @Override
     public void updateAuthorById(long author_id, long id) {
         njdbc.update("update book set author_id = :author_id where id = :id",
-                Map.of(//"name", book.getName(),
-                        "author_id", author_id,
-                        //"genre_id", book.getGenre() != null ? book.getGenre().getId() : null,
+                Map.of("author_id", author_id,
                         "id", id));
     }
 
     @Override
     public void updateGenreById(long genre_id, long id) {
         njdbc.update("update book set genre_id = :genre_id where id = :id",
-                Map.of(//"name", book.getName(),
-                        //"author_id", book.getAuthor() != null ? book.getAuthor().getId() : null,
-                        "genre_id", genre_id,
+                Map.of("genre_id", genre_id,
                         "id", id));
     }
 

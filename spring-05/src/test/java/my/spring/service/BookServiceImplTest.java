@@ -32,6 +32,10 @@ public class BookServiceImplTest {
 
     private static final long NOT_EXPECTED_BOOK_ID = -1;
     private static final long DELETED_BOOK_ID = 2;
+    private static final long NOT_EXPECTED_BOOK_AUTHOR_ID = 10;
+    private static final String NOT_EXPECTED_BOOK_AUTHOR_NAME = "Test author 10";
+    private static final long NOT_EXPECTED_BOOK_GENRE_ID = 10;
+    private static final String NOT_EXPECTED_BOOK_GENRE_NAME = "Test genre 10";
 
     private static final long NEW_BOOK_ID = 10;
     private static final String NEW_BOOK_NAME = "Test book 10";
@@ -81,13 +85,29 @@ public class BookServiceImplTest {
     }
 
     @Test
+    @DisplayName("возвращать true при обновлении, если книга была обновлена")
+    void shouldReturnTrueAfterUpdateing() {
+        doNothing().when(this.dao).updateNameById(NEW_BOOK_NAME, EXPECTED_BOOK_ID);
+        boolean result = bs.updateBookNameById(NEW_BOOK_NAME, EXPECTED_BOOK_ID);
+        assertEquals(true, result);
+    }
+
+    @Test
+    @DisplayName("возвращать false при обновлении, если книга не была обновлена")
+    void shouldReturnFalseAfterUpdateing() {
+        doThrow(new EmptyResultDataAccessException(1)).when(this.dao).updateNameById(NEW_BOOK_NAME, NOT_EXPECTED_BOOK_ID);
+        boolean result = bs.updateBookNameById(NEW_BOOK_NAME, NOT_EXPECTED_BOOK_ID);
+        assertEquals(false, result);
+    }
+
+    @Test
     @DisplayName("возвращать false при добавлении, если книга добавлена не была")
     void shouldReturnFalseAfterAdding() {
-        Author notExpectedAuthor = new Author(NEW_BOOK_AUTHOR_ID, NEW_BOOK_AUTHOR_NAME);
-        Genre notExpectedGenre = new Genre(NEW_BOOK_GENRE_ID, NEW_BOOK_GENRE_NAME);
+        Author notExpectedAuthor = new Author(NOT_EXPECTED_BOOK_AUTHOR_ID, NOT_EXPECTED_BOOK_AUTHOR_NAME);
+        Genre notExpectedGenre = new Genre(NOT_EXPECTED_BOOK_GENRE_ID, NOT_EXPECTED_BOOK_GENRE_NAME);
         Book newBook = new Book(EXPECTED_BOOK_ID, EXPECTED_BOOK_NAME, notExpectedAuthor, notExpectedGenre);
         doThrow(new EmptyResultDataAccessException(1)).when(this.dao).insert(newBook);
-        boolean result = bs.addBook(EXPECTED_BOOK_NAME, NEW_BOOK_AUTHOR_ID, NEW_BOOK_GENRE_ID);
+        boolean result = bs.addBook(EXPECTED_BOOK_NAME, NOT_EXPECTED_BOOK_AUTHOR_ID, NOT_EXPECTED_BOOK_GENRE_ID);
         assertEquals(false, result);
     }
 
