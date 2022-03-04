@@ -1,4 +1,4 @@
-package my.spring.service;
+package my.spring.service.author;
 
 import my.spring.domain.Author;
 

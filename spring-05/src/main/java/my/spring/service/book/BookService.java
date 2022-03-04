@@ -1,9 +1,8 @@
-package my.spring.service;
+package my.spring.service.book;
 
 import my.spring.domain.Book;
 import org.springframework.lang.Nullable;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface BookService {

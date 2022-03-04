@@ -1,4 +1,4 @@
-package my.spring.service;
+package my.spring.service.book;
 
 import my.spring.domain.Book;
 

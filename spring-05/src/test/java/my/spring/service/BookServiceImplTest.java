@@ -4,12 +4,12 @@ import my.spring.dao.BookDao;
 import my.spring.domain.Author;
 import my.spring.domain.Book;
 import my.spring.domain.Genre;
+import my.spring.service.book.BookService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.ArrayList;

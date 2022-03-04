@@ -1,7 +1,8 @@
-package my.spring.service;
+package my.spring.service.genre;
 
 import lombok.RequiredArgsConstructor;
 import my.spring.domain.Genre;
+import my.spring.service.InputOutputService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

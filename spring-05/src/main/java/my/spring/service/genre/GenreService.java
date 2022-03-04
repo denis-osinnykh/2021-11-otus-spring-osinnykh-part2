@@ -1,4 +1,4 @@
-package my.spring.service;
+package my.spring.service.genre;
 
 import my.spring.domain.Genre;
 

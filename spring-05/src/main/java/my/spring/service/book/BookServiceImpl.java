@@ -1,4 +1,4 @@
-package my.spring.service;
+package my.spring.service.book;
 
 import lombok.RequiredArgsConstructor;
 import my.spring.dao.AuthorDao;
@@ -7,6 +7,7 @@ import my.spring.dao.GenreDao;
 import my.spring.domain.Author;
 import my.spring.domain.Book;
 import my.spring.domain.Genre;
+import my.spring.service.InputOutputService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
