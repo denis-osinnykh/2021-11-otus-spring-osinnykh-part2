@@ -46,7 +46,7 @@ public class BookServiceImpl implements BookService {
         try {
             Author author = authorDao.getById(authorId);
             Genre genre = genreDao.getById(genreId);
-            Book newBook =  new Book(null, bookName, author, genre);
+            Book newBook =  new Book(bookName, author, genre);
 
             bookDao.insert(newBook);
             return true;

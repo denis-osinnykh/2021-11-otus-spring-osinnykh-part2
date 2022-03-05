@@ -6,17 +6,21 @@ import org.springframework.lang.Nullable;
 @Data
 public class Book {
     @Nullable
-    private Long id;
+    private long id;
     private final String name;
-    @Nullable
     private Author author;
-    @Nullable
     private Genre genre;
 
-    public Book(@Nullable Long id, String name, @Nullable Author author, @Nullable Genre genre){
-       if (id != null) this.id = id.longValue();
+    public Book(long id, String name, @Nullable Author author, @Nullable Genre genre){
+       this.id = id;
        this.name = name;
        this.author = author;
        this.genre = genre;
+    }
+
+    public Book(String name, @Nullable Author author, @Nullable Genre genre){
+        this.name = name;
+        this.author = author;
+        this.genre = genre;
     }
 }
