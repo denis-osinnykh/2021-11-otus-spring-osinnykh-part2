@@ -30,7 +30,7 @@ public class ApplicationCommands {
 
     @ShellMethod(value = "Get count of books", key = {"gcb", "get count"})
     public void getBooksCount() {
-        int count = bs.getBooksCount();
+        long count = bs.getBooksCount();
         io.printString("Количество книг: %s", new Object[] { count });
     }
 

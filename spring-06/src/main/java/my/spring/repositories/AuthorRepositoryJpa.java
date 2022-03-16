@@ -1,9 +1,7 @@
-package my.spring.dao;
+package my.spring.repositories;
 
 import lombok.RequiredArgsConstructor;
 import my.spring.domain.Author;
-import my.spring.domain.Book;
-import my.spring.domain.Genre;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
@@ -16,9 +14,9 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @Repository
-public class AuthorDaoJbdc implements AuthorDao {
+public class AuthorRepositoryJpa implements AuthorRepository {
     
-    private final NamedParameterJdbcOperations njdbc;
+    /*private final NamedParameterJdbcOperations njdbc;
 
     @Override
     public Author getById(long id) {
@@ -42,5 +40,5 @@ public class AuthorDaoJbdc implements AuthorDao {
 
             return new Author(id, name);
         }
-    }
+    }*/
 }

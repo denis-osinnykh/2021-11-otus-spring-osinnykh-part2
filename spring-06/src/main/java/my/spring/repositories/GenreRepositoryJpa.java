@@ -1,4 +1,4 @@
-package my.spring.dao;
+package my.spring.repositories;
 
 import lombok.RequiredArgsConstructor;
 import my.spring.domain.Genre;
@@ -14,8 +14,8 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @Repository
-public class GenreDaoJdbc implements GenreDao {
-    private final NamedParameterJdbcOperations njdbc;
+public class GenreRepositoryJpa implements GenreRepository {
+    /*private final NamedParameterJdbcOperations njdbc;
 
     @Override
     public Genre getById(long id) {
@@ -39,5 +39,5 @@ public class GenreDaoJdbc implements GenreDao {
 
             return new Genre(id, name);
         }
-    }
+    }*/
 }

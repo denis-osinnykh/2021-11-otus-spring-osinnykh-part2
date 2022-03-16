@@ -1,50 +1,61 @@
-package my.spring.dao;
+package my.spring.repositories;
 
 import lombok.RequiredArgsConstructor;
 import my.spring.domain.Author;
 import my.spring.domain.Book;
 import my.spring.domain.Genre;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
-public class BookDaoJdbc implements BookDao {
+public class BookRepositoryJpa implements BookRepository {
 
-    private final NamedParameterJdbcOperations njdbc;
+    @PersistenceContext
+    private final EntityManager em;
 
     @Override
-    public int getCount() {
-        Map<String, Object> params = Collections.singletonMap("id", 1);
-        Integer count = njdbc.queryForObject("select count(*) from book", params, Integer.class);
-        return count == null? 0: count;
+    public long getCount() {
+        long count = em.createQuery("select count(b) from Book b", Long.class).getSingleResult();
+        return count;
     }
+
+    /*@Override
+    public Optional<Book> getById(long id) {
+        TypedQuery<Book> query = em.createQuery("select b from Book b " +
+                "where b.id = :id", Book.class);
+        query.setParameter("id", id);
+        try {
+            return Optional.of(query.getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
+    }*/
 
     @Override
     public Book getById(long id) {
-        Map<String, Long> params = Collections.singletonMap("id", id);
-        Book book = njdbc.queryForObject("select b.id, b.name, b.author_id, b.genre_id, a.name as a_name, g.name as g_name from book b " +
-                "inner join author a on b.author_id = a.id " +
-                "inner join genre g on b.genre_id = g.id " +
-                "where b.id = :id", params, new BookMapper());
-        return book;
+        TypedQuery<Book> query = em.createQuery("select b from Book b " +
+                "where b.id = :id", Book.class);
+        query.setParameter("id", id);
+            return query.getSingleResult();
     }
 
     @Override
     public List<Book> getAll() {
-        List<Book> list = njdbc.query("select b.id, b.name, b.author_id, b.genre_id, a.name as a_name, g.name as g_name from book b " +
-                "inner join author a on b.author_id = a.id " +
-                "inner join genre g on b.genre_id = g.id ", new BookMapper());
-        return list;
+         return em.createQuery("select b from Book b ", Book.class).getResultList();
     }
-
+/*
     @Override
     public void insert(Book book) {
         njdbc.update("insert into book (name, author_id, genre_id) values (:name, :author_id, :genre_id)",
@@ -91,5 +102,5 @@ public class BookDaoJdbc implements BookDao {
 
             return new Book(id, name, author, genre);
         }
-    }
+    }*/
 }

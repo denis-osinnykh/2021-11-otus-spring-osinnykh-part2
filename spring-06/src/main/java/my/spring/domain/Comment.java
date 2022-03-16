@@ -9,17 +9,17 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @Data
 @Entity
-@Table(name = "author")
-public class Author {
+@Table(name = "comment")
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column
-    private String name;
+    private String text;
 
-    public Author(long id, String name) {
+    public Comment(long id, String text) {
         this.id = id;
-        this.name = name;
+        this.text = text;
     }
 }
