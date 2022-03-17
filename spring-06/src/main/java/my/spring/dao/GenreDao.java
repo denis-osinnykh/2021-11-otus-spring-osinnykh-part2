@@ -1,10 +1,10 @@
-package my.spring.repositories;
+package my.spring.dao;
 
 import my.spring.domain.Genre;
 
 import java.util.List;
 
-public interface GenreRepository {
+public interface GenreDao {
 
     Genre getById(long id);
 

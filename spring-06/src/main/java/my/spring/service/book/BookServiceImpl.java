@@ -10,6 +10,7 @@ import my.spring.domain.Genre;
 import my.spring.repositories.BookRepository;
 import my.spring.service.InputOutputService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -48,9 +49,9 @@ public class BookServiceImpl implements BookService {
         try {
             Author author = authorDao.getById(authorId);
             Genre genre = genreDao.getById(genreId);
-            Book newBook =  new Book(bookName, author, genre);
+            Book newBook =  new Book(0, bookName, null, null);
 
-            bookDao.insert(newBook);
+            bookJpa.save(newBook);
             return true;
         } catch (Exception e) {
             io.printString("Ошибка выполнения запроса! Книга не добавлена!\n " + e.getMessage(), null);

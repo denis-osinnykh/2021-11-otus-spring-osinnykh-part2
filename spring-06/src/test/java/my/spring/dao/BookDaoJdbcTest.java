@@ -44,7 +44,7 @@ public class BookDaoJdbcTest {
         int actualBooksCount = dao.getCount();
         assertEquals(EXPECTED_BOOKS_COUNT, actualBooksCount);
     }
-
+/*
     @Test
     @DisplayName("возвращать ожидаемую книгу по коду")
     void shouldGetBookById() {
@@ -109,5 +109,5 @@ public class BookDaoJdbcTest {
     void shouldDeleteBookById() {
         dao.deleteById(EXPECTED_BOOK_ID);
         assertEquals(0, dao.getCount());
-    }
+    }*/
 }

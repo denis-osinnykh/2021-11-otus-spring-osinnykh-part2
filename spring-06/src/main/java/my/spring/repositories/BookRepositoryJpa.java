@@ -6,11 +6,9 @@ import my.spring.domain.Book;
 import my.spring.domain.Genre;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -18,8 +16,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+//TODO @Transactional
 @RequiredArgsConstructor
 @Repository
+@Transactional
 public class BookRepositoryJpa implements BookRepository {
 
     @PersistenceContext
@@ -55,52 +55,46 @@ public class BookRepositoryJpa implements BookRepository {
     public List<Book> getAll() {
          return em.createQuery("select b from Book b ", Book.class).getResultList();
     }
-/*
+
     @Override
-    public void insert(Book book) {
-        njdbc.update("insert into book (name, author_id, genre_id) values (:name, :author_id, :genre_id)",
-                Map.of("name", book.getName()
-                        , "author_id", book.getAuthor().getId()
-                        , "genre_id", book.getGenre().getId()
-                ));
+    public void save(Book book) {
+        if (book.getId() <= 0) {
+            em.persist(book);
+        }
+        else {
+            em.merge(book);
+        }
     }
 
     @Override
     public void updateNameById(String name, long id) {
-        njdbc.update("update book set name = :name where id = :id",
-                Map.of("name", name,
-                        "id", id));
+        Query query = em.createQuery("update Book set name = :name where id = :id");
+        query.setParameter("name", name);
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 
     @Override
     public void updateAuthorById(long author_id, long id) {
-        njdbc.update("update book set author_id = :author_id where id = :id",
-                Map.of("author_id", author_id,
-                        "id", id));
+        Query query = em.createQuery("update Book set author = :author_id where id = :id");
+        query.setParameter("author_id", author_id);
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 
     @Override
     public void updateGenreById(long genre_id, long id) {
-        njdbc.update("update book set genre_id = :genre_id where id = :id",
-                Map.of("genre_id", genre_id,
-                        "id", id));
+        Query query = em.createQuery("update Book set genre = :genre_id where id = :id");
+        query.setParameter("genre_id", genre_id);
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 
     @Override
     public void deleteById(long id) {
-        Map<String, Long> params = Collections.singletonMap("id", id);
-        njdbc.update("delete from book where id = :id", params);
+        Query query = em.createQuery("delete from Book where id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 
-    private static class BookMapper implements RowMapper<Book> {
-        @Override
-        public Book mapRow(ResultSet resultSet, int i) throws SQLException {
-            long id = resultSet.getLong("id");
-            String name = resultSet.getString("name");
-            Author author = new Author(resultSet.getLong("author_id"), resultSet.getString("a_name"));
-            Genre genre = new Genre(resultSet.getLong("genre_id"), resultSet.getString("g_name"));
-
-            return new Book(id, name, author, genre);
-        }
-    }*/
 }

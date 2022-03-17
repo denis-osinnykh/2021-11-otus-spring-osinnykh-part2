@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS AUTHOR;
-CREATE TABLE AUTHOR(ID BIGINT AUTO_INCREMENT PRIMARY KEY, NAME VARCHAR(255));
+drop table if exists author;
+create table author(id bigint auto_increment primary key, name varchar(255));
 
-DROP TABLE IF EXISTS GENRE;
-CREATE TABLE GENRE(ID BIGINT AUTO_INCREMENT PRIMARY KEY, NAME VARCHAR(255));
+drop table if exists genre;
+create table genre(id bigint auto_increment primary key, name varchar(255));
 
-DROP TABLE IF EXISTS BOOK;
-CREATE TABLE BOOK(ID BIGINT AUTO_INCREMENT PRIMARY KEY, NAME VARCHAR(255), AUTHOR_ID BIGINT REFERENCES AUTHOR(ID) ON DELETE CASCADE, GENRE_ID BIGINT REFERENCES GENRE(ID) ON DELETE CASCADE);
+drop table if exists book;
+create table book(id bigint auto_increment primary key, name varchar(255), author_id bigint references author(id) on delete cascade, genre_id bigint references genre(id) on delete cascade);

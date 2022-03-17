@@ -1,19 +1,17 @@
-package my.spring.repositories;
+package my.spring.dao;
 
 import my.spring.domain.Book;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface BookRepository {
-    long getCount();
+public interface BookDao {
+    int getCount();
 
-    //Optional<Book> getById(long id);
     Book getById(long id);
 
     List<Book> getAll();
 
-    void save(Book book);
+    void insert(Book book);
 
     void updateNameById(String name, long id);
 

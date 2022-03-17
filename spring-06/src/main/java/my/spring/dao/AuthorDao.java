@@ -1,10 +1,10 @@
-package my.spring.repositories;
+package my.spring.dao;
 
 import my.spring.domain.Author;
 
 import java.util.List;
 
-public interface AuthorRepository {
+public interface AuthorDao {
 
     Author getById(long id);
 

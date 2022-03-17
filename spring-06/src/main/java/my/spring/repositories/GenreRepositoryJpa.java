@@ -1,11 +1,16 @@
 package my.spring.repositories;
 
 import lombok.RequiredArgsConstructor;
+import my.spring.domain.Author;
 import my.spring.domain.Genre;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -14,30 +19,22 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @Repository
+@Transactional
 public class GenreRepositoryJpa implements GenreRepository {
-    /*private final NamedParameterJdbcOperations njdbc;
+
+    @PersistenceContext
+    private final EntityManager em;
 
     @Override
     public Genre getById(long id) {
-        Map<String, Long> params = Collections.singletonMap("id", id);
-        Genre genre = njdbc.queryForObject("select id, name from genre " +
-                "where id = :id", params, new GenreMapper());
-        return genre;
+        TypedQuery<Genre> query = em.createQuery("select g from Genre g " +
+                "where g.id = :id", Genre.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 
     @Override
     public List<Genre> getAll() {
-        List<Genre> list = njdbc.query("select id, name from genre", new GenreMapper());
-        return list;
+        return em.createQuery("select g from Genre g ", Genre.class).getResultList();
     }
-
-    private static class GenreMapper implements RowMapper<Genre> {
-        @Override
-        public Genre mapRow(ResultSet resultSet, int i) throws SQLException {
-            long id = resultSet.getLong("id");
-            String name = resultSet.getString("name");
-
-            return new Genre(id, name);
-        }
-    }*/
 }
