@@ -1,13 +1,15 @@
 package my.spring.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
-@RequiredArgsConstructor
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "author")
 public class Author {
@@ -15,11 +17,11 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
-    public Author(long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+//    public Author(long id, String name) {
+//        this.id = id;
+//        this.name = name;
+//    }
 }

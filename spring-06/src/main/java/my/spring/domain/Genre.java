@@ -13,9 +13,10 @@ import javax.persistence.*;
 public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
     public Genre(long id, String name) {

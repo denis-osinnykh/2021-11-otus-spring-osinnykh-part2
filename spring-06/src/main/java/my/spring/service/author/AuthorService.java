@@ -8,4 +8,6 @@ public interface AuthorService {
     Author getAuthorById(long id);
 
     List<Author> getAllAuthors();
+
+    boolean addAuthor(String name);
 }

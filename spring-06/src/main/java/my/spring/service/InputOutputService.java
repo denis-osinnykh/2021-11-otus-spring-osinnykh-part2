@@ -13,9 +13,9 @@ import java.util.Scanner;
 public class InputOutputService {
     private final MessageSource messageSource;
 
-    public String getOutputString(String key, Object[] params) {
+    /*public String getOutputString(String key, Object[] params) {
         return messageSource.getMessage(key, params, new Locale("ru", "RU"));
-    }
+    }*/
 
     public void printString(String text, @Nullable Object[] params) {
         System.out.printf(text + "\n", params);

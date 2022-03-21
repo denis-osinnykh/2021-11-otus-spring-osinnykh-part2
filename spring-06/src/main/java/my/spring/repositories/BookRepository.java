@@ -1,6 +1,8 @@
 package my.spring.repositories;
 
+import my.spring.domain.Author;
 import my.spring.domain.Book;
+import my.spring.domain.Genre;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,13 +15,13 @@ public interface BookRepository {
 
     List<Book> getAll();
 
-    void save(Book book);
+    void add(Book book);
 
     void updateNameById(String name, long id);
 
-    void updateAuthorById(long author_id, long id);
+    void updateAuthorById(Author author, long id);
 
-    void updateGenreById(long genre_id, long id);
+    void updateGenreById(Genre genre, long id);
 
     void deleteById(long id);
 }

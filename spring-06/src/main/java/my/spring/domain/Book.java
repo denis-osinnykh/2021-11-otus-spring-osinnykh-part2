@@ -1,37 +1,43 @@
 package my.spring.domain;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import my.spring.repositories.CommentRepository;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Data
+//@Data
 @Entity
 @Table(name = "book")
 public class Book {
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
     private long id;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Getter
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Getter
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
 
+    @Getter
     @ManyToOne
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-   /* @OneToMany
-    @JoinColumn(name = "comment_id")
-    private List<Comment> comments;*/
+    @OneToMany(targetEntity = Comment.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
+    private List<Comment> comments;
 
     public Book(String name, @Nullable Author author, @Nullable Genre genre){
        this.name = name;

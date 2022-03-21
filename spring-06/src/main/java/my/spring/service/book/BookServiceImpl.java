@@ -1,13 +1,12 @@
 package my.spring.service.book;
 
 import lombok.RequiredArgsConstructor;
-import my.spring.dao.AuthorDao;
-import my.spring.dao.BookDao;
-import my.spring.dao.GenreDao;
 import my.spring.domain.Author;
 import my.spring.domain.Book;
 import my.spring.domain.Genre;
+import my.spring.repositories.AuthorRepository;
 import my.spring.repositories.BookRepository;
+import my.spring.repositories.GenreRepository;
 import my.spring.service.InputOutputService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,16 +16,20 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class BookServiceImpl implements BookService {
-    private final BookDao bookDao;
-    private final AuthorDao authorDao;
-    private final GenreDao genreDao;
+    //private final BookDao bookDao;
+    //private final AuthorDao authorDao;
+    //private final GenreDao genreDao;
     private final InputOutputService io;
     private final BookRepository bookJpa;
+    private final AuthorRepository authorJpa;
+    private final GenreRepository genreJpa;
 
+    @Transactional(readOnly = true)
     public long getBooksCount() {
         return bookJpa.getCount();
     }
 
+    @Transactional(readOnly = true)
     public Book getBookById(long id) {
         try {
             return bookJpa.getById(id);
@@ -36,6 +39,7 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<Book> getAllBooks() {
         try {
             return bookJpa.getAll();
@@ -45,13 +49,14 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @Transactional
     public boolean addBook(String bookName, long authorId, long genreId) {
         try {
-            Author author = authorDao.getById(authorId);
-            Genre genre = genreDao.getById(genreId);
-            Book newBook =  new Book(0, bookName, null, null);
+            Author author = authorJpa.getById(authorId);
+            Genre genre = genreJpa.getById(genreId);
+            Book newBook =  new Book(0, bookName, author, genre);
 
-            bookJpa.save(newBook);
+            bookJpa.add(newBook);
             return true;
         } catch (Exception e) {
             io.printString("Ошибка выполнения запроса! Книга не добавлена!\n " + e.getMessage(), null);
@@ -59,9 +64,10 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @Transactional
     public boolean updateBookNameById(String bookName, long id) {
         try {
-            bookDao.updateNameById(bookName, id);
+            bookJpa.updateNameById(bookName, id);
             return true;
         } catch (Exception e) {
             io.printString("Ошибка выполнения запроса! Книга не обновлена!\n " + e.getMessage(), null);
@@ -69,9 +75,11 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    public boolean updateBookAuthorById(long author_id, long id) {
+    @Transactional
+    public boolean updateBookAuthorById(long authorId, long id) {
         try {
-            bookDao.updateAuthorById(author_id, id);
+            Author author = authorJpa.getById(authorId);
+            bookJpa.updateAuthorById(author, id);
             return true;
         } catch (Exception e) {
             io.printString("Ошибка выполнения запроса! Книга не обновлена!\n " + e.getMessage(), null);
@@ -79,9 +87,11 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    public boolean updateBookGenreById(long genre_id, long id) {
+    @Transactional
+    public boolean updateBookGenreById(long genreId, long id) {
         try {
-            bookDao.updateGenreById(genre_id, id);
+            Genre genre = genreJpa.getById(genreId);
+            bookJpa.updateGenreById(genre, id);
             return true;
         } catch (Exception e) {
             io.printString("Ошибка выполнения запроса! Книга не обновлена!\n " + e.getMessage(), null);
@@ -89,9 +99,10 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @Transactional
     public boolean deleteBookById(long id) {
         try {
-            bookDao.deleteById(id);
+            bookJpa.deleteById(id);
             return true;
         } catch (Exception e) {
             io.printString("Ошибка выполнения запроса! Книга не удалена!\n " + e.getMessage(), null);

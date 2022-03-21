@@ -3,17 +3,21 @@ package my.spring.shell;
 import lombok.RequiredArgsConstructor;
 import my.spring.domain.Author;
 import my.spring.domain.Book;
+import my.spring.domain.Comment;
 import my.spring.domain.Genre;
 import my.spring.service.*;
 import my.spring.service.author.AuthorPrintService;
 import my.spring.service.author.AuthorService;
 import my.spring.service.book.BookPrintService;
 import my.spring.service.book.BookService;
+import my.spring.service.comment.CommentPrintService;
+import my.spring.service.comment.CommentService;
 import my.spring.service.genre.GenrePrintService;
 import my.spring.service.genre.GenreService;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,10 +27,12 @@ public class ApplicationCommands {
     private final BookService bs;
     private final AuthorService as;
     private final GenreService gs;
+    private final CommentService cs;
     private final InputOutputService io;
     private final BookPrintService bps;
     private final AuthorPrintService aps;
     private final GenrePrintService gps;
+    private final CommentPrintService cps;
 
     @ShellMethod(value = "Get count of books", key = {"gcb", "get count"})
     public void getBooksCount() {
@@ -90,10 +96,52 @@ public class ApplicationCommands {
             aps.printListAuthors(authors);
     }
 
+    @ShellMethod(value = "Add author", key = {"aa", "add author" })
+    public void addAuthor(@ShellOption String name) {
+        boolean result = as.addAuthor(name);
+        if (result)
+            io.printString("Автор добавлен!", null);
+    }
+
     @ShellMethod(value = "Get all genres", key = {"gag", "get all genres"})
     public void getAllGenres() {
         List<Genre> genres = gs.getAllGenres();
         if (genres != null)
             gps.printListGenres(genres);
+    }
+
+    @ShellMethod(value = "Get comment by id", key = {"gci", "get comment"})
+    public void getCommentById(@ShellOption long id) {
+        Comment comment = cs.getCommentById(id);
+        if (comment != null)
+            cps.printComment(comment);
+    }
+
+    @ShellMethod(value = "Get all comments by book id", key = {"gac", "get all comments"})
+    public void getAllCommentsByBookId(@ShellOption long id) {
+        List<Comment> comments = cs.getAllCommentsByBookId(id);
+        if (comments != null)
+            cps.printListComments(comments);
+    }
+
+    @ShellMethod(value = "Add comment by book id", key = {"aci", "add comment" })
+    public void addCommentByBookId(@ShellOption String text, @ShellOption long id) {
+        boolean result = cs.addCommentByBookId(text, id);
+        if (result)
+            io.printString("Комментарий добавлен!", null);
+    }
+
+    @ShellMethod(value = "Update comment by id", key = {"uci", "update comment" })
+    public void updateCommentById(@ShellOption String text, @ShellOption long id) {
+        boolean result = cs.updateCommentById(text, id);
+        if (result)
+            io.printString("Комментарий обновлен!", null);
+    }
+
+    @ShellMethod(value = "Delete the comment", key = {"dc", "delete comment"})
+    public void deleteCommentById(@ShellOption long id) {
+        boolean result = cs.deleteCommentById(id);
+        if (result)
+            io.printString("Комментарий удален!", null);
     }
 }

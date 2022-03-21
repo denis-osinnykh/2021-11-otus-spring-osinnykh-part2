@@ -4,22 +4,15 @@ import lombok.RequiredArgsConstructor;
 import my.spring.domain.Author;
 import my.spring.domain.Book;
 import my.spring.domain.Genre;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-//TODO @Transactional
 @RequiredArgsConstructor
 @Repository
-@Transactional
 public class BookRepositoryJpa implements BookRepository {
 
     @PersistenceContext
@@ -45,19 +38,19 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     public Book getById(long id) {
-        TypedQuery<Book> query = em.createQuery("select b from Book b " +
+        TypedQuery<Book> query = em.createQuery("select b from Book b join fetch b.author join fetch b.genre " +
                 "where b.id = :id", Book.class);
         query.setParameter("id", id);
-            return query.getSingleResult();
+        return query.getSingleResult();
     }
 
     @Override
     public List<Book> getAll() {
-         return em.createQuery("select b from Book b ", Book.class).getResultList();
+         return em.createQuery("select b from Book b join fetch b.author join fetch b.genre ", Book.class).getResultList();
     }
 
     @Override
-    public void save(Book book) {
+    public void add(Book book) {
         if (book.getId() <= 0) {
             em.persist(book);
         }
@@ -68,33 +61,32 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     public void updateNameById(String name, long id) {
-        Query query = em.createQuery("update Book set name = :name where id = :id");
+        Query query = em.createQuery("update Book b set b.name = :name where b.id = :id");
         query.setParameter("name", name);
         query.setParameter("id", id);
         query.executeUpdate();
     }
 
     @Override
-    public void updateAuthorById(long author_id, long id) {
-        Query query = em.createQuery("update Book set author = :author_id where id = :id");
-        query.setParameter("author_id", author_id);
+    public void updateAuthorById(Author author, long id) {
+        Query query = em.createQuery("update Book b set b.author = :author where b.id = :id");
+        query.setParameter("author", author);
         query.setParameter("id", id);
         query.executeUpdate();
     }
 
     @Override
-    public void updateGenreById(long genre_id, long id) {
-        Query query = em.createQuery("update Book set genre = :genre_id where id = :id");
-        query.setParameter("genre_id", genre_id);
+    public void updateGenreById(Genre genre, long id) {
+        Query query = em.createQuery("update Book b set b.genre = :genre where b.id = :id");
+        query.setParameter("genre", genre);
         query.setParameter("id", id);
         query.executeUpdate();
     }
 
     @Override
     public void deleteById(long id) {
-        Query query = em.createQuery("delete from Book where id = :id");
+        Query query = em.createQuery("delete from Book b where b.id = :id");
         query.setParameter("id", id);
         query.executeUpdate();
     }
-
 }
