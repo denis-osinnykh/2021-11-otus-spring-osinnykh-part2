@@ -40,13 +40,12 @@ public class CommentRepositoryJpa implements CommentRepository {
 
     @Override
     public void save(Comment comment) {
-
-        //if (comment.getId() <= 0) {
+        if (comment.getId() <= 0) {
             em.persist(comment);
-//        }
-//        else {
-//            em.merge(comment);
-//        }
+        }
+        else {
+            em.merge(comment);
+        }
     }
 
     @Override

@@ -7,19 +7,17 @@ import my.spring.repositories.BookRepositoryJpa;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
-@DisplayName("Dao для работы с книгами должен")
+@DisplayName("Jpa для работы с книгами должен")
 @Import(BookRepositoryJpa.class)
 public class BookRepositoryJpaTest {
 
@@ -72,9 +70,6 @@ public class BookRepositoryJpaTest {
     @Test
     @DisplayName("обновлять книгу")
     void shouldUpdateBook() {
-        Author expectedAuthor = new Author(EXPECTED_BOOK_AUTHOR_ID, EXPECTED_BOOK_AUTHOR_NAME);
-        //Genre expectedGenre = new Genre(EXPECTED_BOOK_GENRE_ID, EXPECTED_BOOK_GENRE_NAME);
-        //Book expectedUpdateBook = new Book(EXPECTED_BOOK_ID, NEW_BOOK_NAME, expectedAuthor, expectedGenre);
         jpa.updateNameById(NEW_BOOK_NAME, EXPECTED_BOOK_ID);
         assertEquals(NEW_BOOK_NAME, jpa.getById(EXPECTED_BOOK_ID).getName());
     }
@@ -83,8 +78,6 @@ public class BookRepositoryJpaTest {
     @DisplayName("обновлять автора у книги")
     void shouldUpdateAuthorBook() {
         Author newAuthor = new Author(NEW_BOOK_AUTHOR_ID, NEW_BOOK_AUTHOR_NAME);
-        //Genre expectedGenre = new Genre(EXPECTED_BOOK_GENRE_ID, EXPECTED_BOOK_GENRE_NAME);
-        //Book expectedUpdateBook = new Book(EXPECTED_BOOK_ID, EXPECTED_BOOK_NAME, newAuthor, expectedGenre);
         jpa.updateAuthorById(newAuthor, EXPECTED_BOOK_ID);
         assertEquals(newAuthor, jpa.getById(EXPECTED_BOOK_ID).getAuthor());
     }
@@ -92,9 +85,7 @@ public class BookRepositoryJpaTest {
     @Test
     @DisplayName("обновлять жанр у книги")
     void shouldUpdateGenreBook() {
-        //Author expectedAuthor = new Author(EXPECTED_BOOK_AUTHOR_ID, EXPECTED_BOOK_AUTHOR_NAME);
         Genre newGenre = new Genre(NEW_BOOK_GENRE_ID, NEW_BOOK_GENRE_NAME);
-        //Book expectedUpdateBook = new Book(EXPECTED_BOOK_ID, EXPECTED_BOOK_NAME, expectedAuthor, newGenre);
         jpa.updateGenreById(newGenre, EXPECTED_BOOK_ID);
         assertEquals(newGenre, jpa.getById(EXPECTED_BOOK_ID).getGenre());
     }
