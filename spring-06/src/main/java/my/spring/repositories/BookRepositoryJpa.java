@@ -5,11 +5,9 @@ import my.spring.domain.Author;
 import my.spring.domain.Book;
 import my.spring.domain.Genre;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository

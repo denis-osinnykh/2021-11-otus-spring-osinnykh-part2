@@ -20,5 +20,8 @@ public class BookPrintServiceImpl implements BookPrintService{
         for (Book book: books) {
             printBook(book);
         }
+
+        if (books.stream().count() == 0)
+            io.printString("Список пуст!", null);
     }
 }

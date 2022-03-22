@@ -3,7 +3,6 @@ package my.spring.repositories;
 import lombok.RequiredArgsConstructor;
 import my.spring.domain.Genre;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

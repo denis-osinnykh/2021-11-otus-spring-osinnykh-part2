@@ -1,17 +1,13 @@
 package my.spring.domain;
 
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import my.spring.repositories.CommentRepository;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-//@Data
 @Entity
 @Table(name = "book")
 public class Book {

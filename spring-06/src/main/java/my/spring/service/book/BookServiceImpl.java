@@ -16,9 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class BookServiceImpl implements BookService {
-    //private final BookDao bookDao;
-    //private final AuthorDao authorDao;
-    //private final GenreDao genreDao;
+
     private final InputOutputService io;
     private final BookRepository bookJpa;
     private final AuthorRepository authorJpa;

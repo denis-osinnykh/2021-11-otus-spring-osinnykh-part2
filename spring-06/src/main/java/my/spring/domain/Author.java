@@ -3,7 +3,6 @@ package my.spring.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
@@ -19,9 +18,4 @@ public class Author {
 
     @Column(name = "name")
     private String name;
-
-//    public Author(long id, String name) {
-//        this.id = id;
-//        this.name = name;
-//    }
 }
