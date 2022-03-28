@@ -55,7 +55,7 @@ public class CommentRepositoryJpaTest {
         Book expectedBook = new Book(EXPECTED_BOOK_ID, EXPECTED_BOOK_NAME, expectedAuthor, expectedGenre);
         Comment expectedNewComment = new Comment(NEW_COMMENT_ID, NEW_COMMENT_TEXT, expectedBook);
         jpa.save(expectedNewComment);
-        assertEquals(expectedNewComment, em.find(Comment.class, NEW_COMMENT_ID));
+        assertEquals(NEW_COMMENT_TEXT, em.find(Comment.class, NEW_COMMENT_ID).getText());
     }
 
     @Test

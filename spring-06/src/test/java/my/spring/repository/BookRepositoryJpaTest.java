@@ -64,7 +64,11 @@ public class BookRepositoryJpaTest {
         Genre expectedGenre = new Genre(EXPECTED_BOOK_GENRE_ID, EXPECTED_BOOK_GENRE_NAME);
         Book expectedNewBook = new Book(NEW_BOOK_ID, NEW_BOOK_NAME, expectedAuthor, expectedGenre);
         jpa.add(expectedNewBook);
-        assertEquals(expectedNewBook, jpa.getById(NEW_BOOK_ID));
+        assertThat(jpa.getById(NEW_BOOK_ID)).isNotNull()
+                .hasFieldOrPropertyWithValue("name", NEW_BOOK_NAME)
+                .hasFieldOrPropertyWithValue("author", expectedAuthor)
+                .hasFieldOrPropertyWithValue("genre", expectedGenre)
+                ;
     }
 
     @Test

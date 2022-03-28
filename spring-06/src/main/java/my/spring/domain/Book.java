@@ -22,18 +22,14 @@ public class Book {
     private String name;
 
     @Getter
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private Author author;
 
     @Getter
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "genre_id")
     private Genre genre;
-
-    @OneToMany(targetEntity = Comment.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
-    private List<Comment> comments;
 
     public Book(String name, @Nullable Author author, @Nullable Genre genre){
        this.name = name;
