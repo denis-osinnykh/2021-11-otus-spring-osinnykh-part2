@@ -19,14 +19,6 @@ public class CommentRepositoryJpa implements CommentRepository {
         this.em = em;
     }
 
-//    @Override
-//    public Comment getById(long id) {
-//        TypedQuery<Comment> query = em.createQuery("select c from Comment c " +
-//                "where c.id = :id", Comment.class);
-//        query.setParameter("id", id);
-//        return query.getSingleResult();
-//    }
-
     @Override
     public Comment getById(long id) {
         return em.find(Comment.class, id);

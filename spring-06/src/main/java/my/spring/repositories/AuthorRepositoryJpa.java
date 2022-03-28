@@ -16,14 +16,6 @@ public class AuthorRepositoryJpa implements AuthorRepository {
     @PersistenceContext
     private final EntityManager em;
 
-//    @Override
-//    public Author getById(long id) {
-//        TypedQuery<Author> query = em.createQuery("select a from Author a " +
-//                "where a.id = :id", Author.class);
-//        query.setParameter("id", id);
-//        return query.getSingleResult();
-//    }
-
     @Override
     public Author getById(long id) {
         return em.find(Author.class, id);
