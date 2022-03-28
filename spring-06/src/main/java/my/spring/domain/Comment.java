@@ -20,7 +20,7 @@ public class Comment {
     private String text;
 
     @Getter
-    @ManyToOne(targetEntity = Book.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Book.class, fetch = FetchType.LAZY)
     private Book book;
 
     public Comment(long id, String text, Book book) {
