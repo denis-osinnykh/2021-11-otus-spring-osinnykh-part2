@@ -60,13 +60,13 @@ public class BookServiceImplTest {
     void shouldGetBooksCount() {
         assertThat(bs.getBooksCount()).isNotNull();
     }
-/*
+
     @Test
     @DisplayName("возвращать книгу по коду")
     void shouldGetBookById() {
         Author expectedAuthor = new Author(EXPECTED_BOOK_AUTHOR_ID, EXPECTED_BOOK_AUTHOR_NAME);
         Genre expectedGenre = new Genre(EXPECTED_BOOK_GENRE_ID, EXPECTED_BOOK_GENRE_NAME);
-        given(this.bookJpa.getById(EXPECTED_BOOK_ID))
+        given(this.bookJpa.findBookById(EXPECTED_BOOK_ID))
                 .willReturn(new Book(EXPECTED_BOOK_ID, EXPECTED_BOOK_NAME, expectedAuthor, expectedGenre));
         assertThat(bs.getBookById(EXPECTED_BOOK_ID)).isNotNull();
     }
@@ -74,7 +74,7 @@ public class BookServiceImplTest {
     @Test
     @DisplayName("возвращать null, если книга по коду не найдена")
     void shouldGetEmptyBookById() {
-        given(this.bookJpa.getById(NOT_EXPECTED_BOOK_ID))
+        given(this.bookJpa.findBookById(NOT_EXPECTED_BOOK_ID))
                 .willReturn(null);
         assertEquals(null, bs.getBookById(NOT_EXPECTED_BOOK_ID));
     }
@@ -86,11 +86,10 @@ public class BookServiceImplTest {
         Genre newGenre = new Genre(EXPECTED_BOOK_GENRE_ID, EXPECTED_BOOK_GENRE_NAME);
         Book newBook = new Book(NEW_BOOK_ID, NEW_BOOK_NAME, newAuthor, newGenre);
 
-        given(this.authorJpa.getById(EXPECTED_BOOK_AUTHOR_ID))
+        given(this.authorJpa.findAuthorById(EXPECTED_BOOK_AUTHOR_ID))
                 .willReturn(newAuthor);
-        given(this.genreJpa.getById(EXPECTED_BOOK_GENRE_ID))
+        given(this.genreJpa.findGenreById(EXPECTED_BOOK_GENRE_ID))
                 .willReturn(newGenre);
-        doNothing().when(this.bookJpa).add(newBook);
 
         boolean result = bs.addBook(NEW_BOOK_NAME, EXPECTED_BOOK_AUTHOR_ID, EXPECTED_BOOK_GENRE_ID);
         assertEquals(true, result);
@@ -118,7 +117,7 @@ public class BookServiceImplTest {
         Author notExpectedAuthor = new Author(NOT_EXPECTED_BOOK_AUTHOR_ID, NOT_EXPECTED_BOOK_AUTHOR_NAME);
         Genre notExpectedGenre = new Genre(NOT_EXPECTED_BOOK_GENRE_ID, NOT_EXPECTED_BOOK_GENRE_NAME);
 
-        doThrow(new EmptyResultDataAccessException(1)).when(this.authorJpa).getById(NOT_EXPECTED_BOOK_AUTHOR_ID);
+        doThrow(new EmptyResultDataAccessException(1)).when(this.authorJpa).findAuthorById(NOT_EXPECTED_BOOK_AUTHOR_ID);
 
         boolean result = bs.addBook(EXPECTED_BOOK_NAME, NOT_EXPECTED_BOOK_AUTHOR_ID, NOT_EXPECTED_BOOK_GENRE_ID);
         assertEquals(false, result);
@@ -127,7 +126,7 @@ public class BookServiceImplTest {
     @Test
     @DisplayName("возвращать список книг")
     void shouldGetNullAllBooks() {
-        given(this.bookJpa.getAll())
+        given(this.bookJpa.findAll())
                 .willReturn(new ArrayList<>());
         assertThat(bs.getAllBooks()).isNotNull();
     }
@@ -146,5 +145,5 @@ public class BookServiceImplTest {
         doThrow(new EmptyResultDataAccessException(1)).when(this.bookJpa).deleteById(NOT_EXPECTED_BOOK_ID);
         boolean result = bs.deleteBookById(NOT_EXPECTED_BOOK_ID);
         assertEquals(false, result);
-    }*/
+    }
 }

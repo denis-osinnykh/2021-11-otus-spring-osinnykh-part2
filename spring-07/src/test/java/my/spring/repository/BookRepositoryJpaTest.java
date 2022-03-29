@@ -1,18 +1,20 @@
 package my.spring.repository;
 
+import my.spring.domain.Author;
+import my.spring.domain.Book;
+import my.spring.domain.Genre;
 import my.spring.repositories.BookRepository;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Import;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @DisplayName("Jpa для работы с книгами должен")
-@Import(BookRepository.class)
 public class BookRepositoryJpaTest {
 
     private static final long EXPECTED_BOOKS_COUNT = 1;
@@ -36,40 +38,26 @@ public class BookRepositoryJpaTest {
 
     @Autowired
     private TestEntityManager em;
-/*
-    @Test
-    @DisplayName("возвращать ожидаемое количество книг")
-    void shouldGetBooksCount() {
-        long actualBooksCount = jpa.getCount();
-        assertEquals(EXPECTED_BOOKS_COUNT, actualBooksCount);
-    }
 
     @Test
-    @DisplayName("возвращать ожидаемую книгу по коду")
-    void shouldGetBookById() {
-        Book expectedBook = em.find(Book.class, EXPECTED_BOOK_ID);
-        assertEquals(expectedBook, jpa.getById(EXPECTED_BOOK_ID));
-    }
-
-    @Test
-    @DisplayName("добавлять книгу")
+    @DisplayName("добавлять книгу корректно")
     void shouldAddBook() {
         Author expectedAuthor = new Author(EXPECTED_BOOK_AUTHOR_ID, EXPECTED_BOOK_AUTHOR_NAME);
         Genre expectedGenre = new Genre(EXPECTED_BOOK_GENRE_ID, EXPECTED_BOOK_GENRE_NAME);
         Book expectedNewBook = new Book(NEW_BOOK_ID, NEW_BOOK_NAME, expectedAuthor, expectedGenre);
-        jpa.add(expectedNewBook);
-        assertThat(jpa.getById(NEW_BOOK_ID)).isNotNull()
+        jpa.save(expectedNewBook);
+        assertThat(jpa.findBookById(NEW_BOOK_ID)).isNotNull()
                 .hasFieldOrPropertyWithValue("name", NEW_BOOK_NAME)
                 .hasFieldOrPropertyWithValue("author", expectedAuthor)
                 .hasFieldOrPropertyWithValue("genre", expectedGenre)
-                ;
+        ;
     }
 
     @Test
     @DisplayName("обновлять книгу")
     void shouldUpdateBook() {
         jpa.updateNameById(NEW_BOOK_NAME, EXPECTED_BOOK_ID);
-        assertEquals(NEW_BOOK_NAME, jpa.getById(EXPECTED_BOOK_ID).getName());
+        assertEquals(NEW_BOOK_NAME, jpa.findBookById(EXPECTED_BOOK_ID).getName());
     }
 
     @Test
@@ -77,7 +65,7 @@ public class BookRepositoryJpaTest {
     void shouldUpdateAuthorBook() {
         Author newAuthor = new Author(NEW_BOOK_AUTHOR_ID, NEW_BOOK_AUTHOR_NAME);
         jpa.updateAuthorById(newAuthor, EXPECTED_BOOK_ID);
-        assertEquals(newAuthor, jpa.getById(EXPECTED_BOOK_ID).getAuthor());
+        assertEquals(newAuthor, jpa.findBookById(EXPECTED_BOOK_ID).getAuthor());
     }
 
     @Test
@@ -85,23 +73,6 @@ public class BookRepositoryJpaTest {
     void shouldUpdateGenreBook() {
         Genre newGenre = new Genre(NEW_BOOK_GENRE_ID, NEW_BOOK_GENRE_NAME);
         jpa.updateGenreById(newGenre, EXPECTED_BOOK_ID);
-        assertEquals(newGenre, jpa.getById(EXPECTED_BOOK_ID).getGenre());
+        assertEquals(newGenre, jpa.findBookById(EXPECTED_BOOK_ID).getGenre());
     }
-
-    @Test
-    @DisplayName("возвращать ожидаемый список книг")
-    void shouldGetAllBooks() {
-        List<Book> expectedBooks = jpa.getAll();
-        assertThat(expectedBooks).isNotNull().hasSize(EXPECTED_NUMBER_OF_BOOKS)
-                .allMatch(s -> !s.getName().equals(""))
-                .allMatch(s -> s.getAuthor() != null)
-                .allMatch(s -> s.getGenre() != null);
-    }
-
-    @Test
-    @DisplayName("удалять книгу")
-    void shouldDeleteBookById() {
-        jpa.deleteById(EXPECTED_BOOK_ID);
-        assertEquals(0, jpa.getCount());
-    }*/
 }
