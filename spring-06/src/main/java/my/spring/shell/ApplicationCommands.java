@@ -61,21 +61,21 @@ public class ApplicationCommands {
     }
 
     @ShellMethod(value = "Update the book name by id", key = {"ubi", "update book name"})
-    public void UpdateBookNameById(@ShellOption long id, @ShellOption String bookName) {
+    public void updateBookNameById(@ShellOption long id, @ShellOption String bookName) {
         boolean result = bs.updateBookNameById(bookName, id);
         if (result)
             io.printString("Книга обновлена!", null);
     }
 
     @ShellMethod(value = "Update the book author by id", key = {"uba", "update book author"})
-    public void UpdateBookAuthorById(@ShellOption long id, @ShellOption long authorId) {
+    public void updateBookAuthorById(@ShellOption long id, @ShellOption long authorId) {
         boolean result = bs.updateBookAuthorById(authorId, id);
         if (result)
             io.printString("Автор у книги обновлен!", null);
     }
 
     @ShellMethod(value = "Update the book genre by id", key = {"ubg", "update book genre"})
-    public void UpdateBookGenreById(@ShellOption long id, @ShellOption long genreId) {
+    public void updateBookGenreById(@ShellOption long id, @ShellOption long genreId) {
         boolean result = bs.updateBookGenreById(genreId, id);
         if (result)
             io.printString("Жанр у книги обновлен!", null);
