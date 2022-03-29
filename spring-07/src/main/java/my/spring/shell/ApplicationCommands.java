@@ -59,7 +59,7 @@ public class ApplicationCommands {
         if (result)
             io.printString("Книга добавлена!", null);
     }
-
+/*
     @ShellMethod(value = "Update the book name by id", key = {"ubi", "update book name"})
     public void UpdateBookNameById(@ShellOption long id, @ShellOption String bookName) {
         boolean result = bs.updateBookNameById(bookName, id);
@@ -80,7 +80,7 @@ public class ApplicationCommands {
         if (result)
             io.printString("Жанр у книги обновлен!", null);
     }
-
+*/
     @ShellMethod(value = "Delete the book", key = {"db", "delete book"})
     public void deleteBookById(@ShellOption long id) {
         boolean result = bs.deleteBookById(id);

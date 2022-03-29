@@ -24,13 +24,13 @@ public class BookServiceImpl implements BookService {
 
     @Transactional(readOnly = true)
     public long getBooksCount() {
-        return bookJpa.getCount();
+        return bookJpa.countAllBy();
     }
 
     @Transactional(readOnly = true)
     public Book getBookById(long id) {
         try {
-            return bookJpa.getById(id);
+            return bookJpa.findBookById(id);
         } catch (Exception e) {
             io.printString("Ошибка выполнения запроса! Книга не найдена!\n " + e.getMessage(), null);
             return null;
@@ -40,7 +40,7 @@ public class BookServiceImpl implements BookService {
     @Transactional(readOnly = true)
     public List<Book> getAllBooks() {
         try {
-            return bookJpa.getAll();
+            return bookJpa.findAll();
         } catch (Exception e) {
             io.printString("Ошибка выполнения запроса! Книги не найдены!\n " + e.getMessage(), null);
             return null;
@@ -54,14 +54,14 @@ public class BookServiceImpl implements BookService {
             Genre genre = genreJpa.getById(genreId);
             Book newBook =  new Book(0, bookName, author, genre);
 
-            bookJpa.add(newBook);
+            bookJpa.save(newBook);
             return true;
         } catch (Exception e) {
             io.printString("Ошибка выполнения запроса! Книга не добавлена!\n " + e.getMessage(), null);
             return false;
         }
     }
-
+/*
     @Transactional
     public boolean updateBookNameById(String bookName, long id) {
         try {
@@ -95,7 +95,7 @@ public class BookServiceImpl implements BookService {
             io.printString("Ошибка выполнения запроса! Книга не обновлена!\n " + e.getMessage(), null);
             return false;
         }
-    }
+    }*/
 
     @Transactional
     public boolean deleteBookById(long id) {

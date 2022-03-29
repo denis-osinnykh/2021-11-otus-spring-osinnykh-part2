@@ -10,6 +10,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "book")
+@NamedEntityGraph(name = "books-entity-graph",
+        attributeNodes = {@NamedAttributeNode("author"),
+                        @NamedAttributeNode("genre")})
 public class Book {
     @Getter
     @Id

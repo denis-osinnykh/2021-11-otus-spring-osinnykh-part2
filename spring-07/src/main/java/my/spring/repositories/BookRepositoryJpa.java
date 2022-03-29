@@ -11,8 +11,8 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Repository
-public class BookRepositoryJpa implements BookRepository {
-
+public class BookRepositoryJpa {
+/*
     @PersistenceContext
     private final EntityManager em;
 
@@ -74,5 +74,5 @@ public class BookRepositoryJpa implements BookRepository {
         Query query = em.createQuery("delete from Book b where b.id = :id");
         query.setParameter("id", id);
         query.executeUpdate();
-    }
+    }*/
 }
