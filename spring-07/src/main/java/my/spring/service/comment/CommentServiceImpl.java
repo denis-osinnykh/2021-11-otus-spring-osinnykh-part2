@@ -21,7 +21,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional(readOnly = true)
     public Comment getCommentById(long id) {
         try {
-            return commentJpa.getById(id);
+            return commentJpa.findCommentById(id);
         } catch (Exception e) {
             io.printString("Ошибка выполнения запроса! Комментарий не найден!\n " + e.getMessage(), null);
             return null;
@@ -41,7 +41,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public boolean addCommentByBookId(String text, long bookId) {
         try {
-            Book book = bookJpa.getById(bookId);
+            Book book = bookJpa.findBookById(bookId);
             if (book == null) {
                 io.printString("Ошибка выполнения запроса! Книга не найдена!\n ", null);
                 return false;
@@ -59,7 +59,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public boolean updateCommentById(String text, long commentId) {
         try {
-            Comment comment = commentJpa.getById(commentId);
+            Comment comment = commentJpa.findCommentById(commentId);
             if (comment == null) {
                 io.printString("Ошибка выполнения запроса! Комментарий не найден!\n ", null);
                 return false;

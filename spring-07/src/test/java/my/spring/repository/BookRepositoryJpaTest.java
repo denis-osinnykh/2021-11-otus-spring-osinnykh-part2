@@ -1,24 +1,18 @@
 package my.spring.repository;
 
-import my.spring.domain.Author;
-import my.spring.domain.Book;
-import my.spring.domain.Genre;
-import my.spring.repositories.BookRepositoryJpa;
+import my.spring.repositories.BookRepository;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @DisplayName("Jpa для работы с книгами должен")
-@Import(BookRepositoryJpa.class)
+@Import(BookRepository.class)
 public class BookRepositoryJpaTest {
 
     private static final long EXPECTED_BOOKS_COUNT = 1;
@@ -38,7 +32,7 @@ public class BookRepositoryJpaTest {
     private static final String NEW_BOOK_GENRE_NAME = "Test genre 2";
 
     @Autowired
-    private BookRepositoryJpa jpa;
+    private BookRepository jpa;
 
     @Autowired
     private TestEntityManager em;

@@ -7,6 +7,8 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "comment")
+@NamedEntityGraph(name = "comments-entity-graph",
+        attributeNodes = {@NamedAttributeNode("book")})
 public class Comment {
     @Getter
     @Id

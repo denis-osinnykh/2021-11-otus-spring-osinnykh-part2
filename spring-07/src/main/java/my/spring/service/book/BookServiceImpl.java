@@ -51,7 +51,7 @@ public class BookServiceImpl implements BookService {
     public boolean addBook(String bookName, long authorId, long genreId) {
         try {
             Author author = authorJpa.findAuthorById(authorId);
-            Genre genre = genreJpa.getById(genreId);
+            Genre genre = genreJpa.findGenreById(genreId);
             Book newBook =  new Book(0, bookName, author, genre);
 
             bookJpa.save(newBook);
@@ -61,7 +61,7 @@ public class BookServiceImpl implements BookService {
             return false;
         }
     }
-/*
+
     @Transactional
     public boolean updateBookNameById(String bookName, long id) {
         try {
@@ -88,14 +88,14 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public boolean updateBookGenreById(long genreId, long id) {
         try {
-            Genre genre = genreJpa.getById(genreId);
+            Genre genre = genreJpa.findGenreById(genreId);
             bookJpa.updateGenreById(genre, id);
             return true;
         } catch (Exception e) {
             io.printString("Ошибка выполнения запроса! Книга не обновлена!\n " + e.getMessage(), null);
             return false;
         }
-    }*/
+    }
 
     @Transactional
     public boolean deleteBookById(long id) {

@@ -5,13 +5,15 @@ import my.spring.domain.Book;
 import my.spring.domain.Genre;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
     long countAllBy();
 
+    @EntityGraph(value = "books-entity-graph")
     Book findBookById(long id);
 
     @EntityGraph(value = "books-entity-graph")
@@ -19,11 +21,17 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     Book save(Book book);
 
-    /*void updateNameById(String name, long id);
+    @Modifying
+    @Query("update Book b set b.name = :name where b.id = :id")
+    void updateNameById(String name, long id);
 
+    @Modifying
+    @Query("update Book b set b.author = :author where b.id = :id")
     void updateAuthorById(Author author, long id);
 
-    void updateGenreById(Genre genre, long id);*/
+    @Modifying
+    @Query("update Book b set b.genre = :genre where b.id = :id")
+    void updateGenreById(Genre genre, long id);
 
     void deleteById(long id);
 }
