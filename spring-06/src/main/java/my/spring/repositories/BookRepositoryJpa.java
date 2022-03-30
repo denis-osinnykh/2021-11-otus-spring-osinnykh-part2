@@ -7,7 +7,9 @@ import my.spring.domain.Genre;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Repository
@@ -22,24 +24,12 @@ public class BookRepositoryJpa implements BookRepository {
         return count;
     }
 
-    /*@Override
-    public Optional<Book> getById(long id) {
-        TypedQuery<Book> query = em.createQuery("select b from Book b " +
-                "where b.id = :id", Book.class);
-        query.setParameter("id", id);
-        try {
-            return Optional.of(query.getSingleResult());
-        } catch (NoResultException e) {
-            return Optional.empty();
-        }
-    }*/
-
     @Override
     public Book getById(long id) {
-        TypedQuery<Book> query = em.createQuery("select b from Book b join fetch b.author join fetch b.genre " +
-                "where b.id = :id", Book.class);
-        query.setParameter("id", id);
-        return query.getSingleResult();
+        EntityGraph eg = em.getEntityGraph("books-entity-graph");
+        Map<String, Object> props = new HashMap<>();
+        props.put("javax.persistence.fetchgraph", eg);
+        return em.find(Book.class, id, props);
     }
 
     @Override
