@@ -24,7 +24,7 @@ public class BookServiceImpl implements BookService {
 
     @Transactional(readOnly = true)
     public long getBooksCount() {
-        return bookJpa.countAllBy();
+        return bookJpa.count();
     }
 
     @Transactional(readOnly = true)

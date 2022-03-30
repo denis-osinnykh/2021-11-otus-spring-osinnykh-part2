@@ -11,15 +11,12 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
-    long countAllBy();
 
     @EntityGraph(value = "books-entity-graph")
     Book findBookById(long id);
 
     @EntityGraph(value = "books-entity-graph")
     List<Book> findAll();
-
-    Book save(Book book);
 
     @Modifying
     @Query("update Book b set b.name = :name where b.id = :id")
@@ -32,6 +29,4 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Modifying
     @Query("update Book b set b.genre = :genre where b.id = :id")
     void updateGenreById(Genre genre, long id);
-
-    void deleteById(long id);
 }
