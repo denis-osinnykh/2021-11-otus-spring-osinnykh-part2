@@ -7,6 +7,7 @@ import my.spring.domain.Comment;
 import my.spring.domain.Genre;
 import my.spring.repositories.AuthorRepository;
 import my.spring.repositories.BookRepository;
+import my.spring.repositories.CommentRepository;
 import my.spring.repositories.GenreRepository;
 import my.spring.service.InputOutputService;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookJpa;
     private final AuthorRepository authorJpa;
     private final GenreRepository genreJpa;
+    private final CommentRepository commentJpa;
 
     @Transactional(readOnly = true)
     public long getBooksCount() {
@@ -85,7 +87,6 @@ public class BookServiceImpl implements BookService {
             book.setAuthor(newAuthor);
             bookJpa.save(book);
 
-            //bookJpa.updateAuthorById(author, id);
             return true;
         } catch (Exception e) {
             io.printString("Ошибка выполнения запроса! Книга не обновлена!\n " + e.getMessage(), null);
@@ -101,7 +102,6 @@ public class BookServiceImpl implements BookService {
             book.setGenre(newGenre);
             bookJpa.save(book);
 
-            //bookJpa.updateGenreById(genre, id);
             return true;
         } catch (Exception e) {
             io.printString("Ошибка выполнения запроса! Книга не обновлена!\n " + e.getMessage(), null);
@@ -112,21 +112,14 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public boolean deleteBookById(String id) {
         try {
+            List<Comment> comments = commentJpa.findAllByBookId(id);
+            comments.stream().forEach(c -> commentJpa.deleteById(c.getId()));
+
             bookJpa.deleteById(id);
             return true;
         } catch (Exception e) {
             io.printString("Ошибка выполнения запроса! Книга не удалена!\n " + e.getMessage(), null);
             return false;
-        }
-    }
-
-    @Transactional(readOnly = true)
-    public List<Comment> getAllCommentsByBookId(String id) {
-        try {
-            return bookJpa.findAllCommentsByBookId(id);
-        } catch (Exception e) {
-            io.printString("Ошибка выполнения запроса! Комментарии не найдены!\n " + e.getMessage(), null);
-            return null;
         }
     }
 }

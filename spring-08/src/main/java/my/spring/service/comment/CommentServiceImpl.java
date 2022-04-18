@@ -46,9 +46,9 @@ public class CommentServiceImpl implements CommentService {
                 io.printString("Ошибка выполнения запроса! Книга не найдена!\n ", null);
                 return false;
             }
-            Comment newComment = new Comment(text/*, book*/);
-
+            Comment newComment = new Comment(text, bookId);
             commentJpa.save(newComment);
+
             return true;
         } catch (Exception e) {
             io.printString("Ошибка выполнения запроса! Комментарий не добавлен!\n " + e.getMessage(), null);

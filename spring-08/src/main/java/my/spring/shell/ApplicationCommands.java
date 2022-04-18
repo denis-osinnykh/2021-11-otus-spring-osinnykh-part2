@@ -80,7 +80,7 @@ public class ApplicationCommands {
         if (result)
             io.printString("Жанр у книги обновлен!", null);
     }
-
+    
     @ShellMethod(value = "Delete the book", key = {"db", "delete book"})
     public void deleteBookById(@ShellOption String id) {
         boolean result = bs.deleteBookById(id);
@@ -118,7 +118,7 @@ public class ApplicationCommands {
 
     @ShellMethod(value = "Get all comments by book id", key = {"gac", "get all comments"})
     public void getAllCommentsByBookId(@ShellOption String id) {
-        List<Comment> comments = bs.getAllCommentsByBookId(id);
+        List<Comment> comments = cs.getAllCommentsByBookId(id);
         if (comments != null)
             cps.printListComments(comments);
     }

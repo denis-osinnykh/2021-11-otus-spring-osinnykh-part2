@@ -3,7 +3,6 @@ package my.spring.changelogs;
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
 import com.mongodb.client.MongoDatabase;
-import lombok.val;
 import my.spring.domain.Author;
 import my.spring.domain.Book;
 import my.spring.domain.Comment;
@@ -21,6 +20,7 @@ public class InitMongoDBDataChangeLog {
     private Genre sameGenre;
     private Genre sameGenre2;
     private Comment sameComment;
+    private Book sameBook;
 
     @ChangeSet(order = "000", id = "dropDB", author = "osinnykh", runAlways = true)
     public void dropDB(MongoDatabase database){
@@ -39,13 +39,13 @@ public class InitMongoDBDataChangeLog {
         sameGenre2 = repository.save(new Genre("Same genre 2"));
     }
 
-    @ChangeSet(order = "003", id = "initComments", author = "osinnykh", runAlways = true)
-    public void initComments(CommentRepository repository){
-        sameComment = repository.save(new Comment("Same comment"));
+    @ChangeSet(order = "003", id = "initBooks", author = "osinnykh", runAlways = true)
+    public void initBooks(BookRepository repository){
+        sameBook = repository.save(new Book("Same book", sameAuthor, sameGenre));
     }
 
-    @ChangeSet(order = "004", id = "initBooks", author = "osinnykh", runAlways = true)
-    public void initBooks(BookRepository repository){
-        repository.save(new Book("Same book", sameAuthor, sameGenre, sameComment));
+    @ChangeSet(order = "004", id = "initComments", author = "osinnykh", runAlways = true)
+    public void initComments(CommentRepository repository){
+        sameComment = repository.save(new Comment("Same comment", sameBook.getId()));
     }
 }

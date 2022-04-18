@@ -23,6 +23,8 @@ public interface BookService {
     boolean updateBookGenreById(String genre_id, String id);
 
     boolean deleteBookById(String id);
-
-    List<Comment> getAllCommentsByBookId(String id);
+//
+//    List<Comment> getAllCommentsByBookId(String id);
+//
+//    Comment getCommentById(String id);
 }

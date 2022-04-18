@@ -2,7 +2,6 @@ package my.spring.domain;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -18,15 +17,20 @@ public class Comment {
     private String text;
 
     @Getter
-    private Book book;
+    private String bookId;
 
-    public Comment(String id, String text, Book book) {
+    public Comment(String id, String text, String bookId) {
         this.id = id;
         this.text = text;
-        this.book = book;
+        this.bookId = bookId;
     }
 
-    public Comment(String text/*, Book book*/) {
+    public Comment(String text, String bookId) {
+        this.text = text;
+        this.bookId = bookId;
+    }
+
+    public Comment(String text) {
         this.text = text;
     }
 }
